@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace SGURestaurant.Models
 {
-    public class SGURestaurantManagerDbInitializer : DropCreateDatabaseAlways<SGURestaurantContext>
+    public class SGURestaurantManagerDbInitializer : DropCreateDatabaseIfModelChanges<SGURestaurantContext>
     {
         protected override void Seed(SGURestaurantContext context)
         {

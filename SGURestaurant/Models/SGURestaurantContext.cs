@@ -20,6 +20,11 @@ namespace SGURestaurant.Models
         {
         }
 
+        public static SGURestaurantContext Create()
+        {
+            return new SGURestaurantContext();
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>().HasKey(e => e.Id);
