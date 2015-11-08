@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="" title="SGU Restaurant"  description="">
+        <siteMapNode url="~/Home/Index" title="Trang chủ"  description="" />
+        <siteMapNode url="~/Home/About" title="Thông tin"  description="" />
+        <siteMapNode url="~/Home/Contact" title="Liên hệ"  description="" />
+    </siteMapNode>
+</siteMap>

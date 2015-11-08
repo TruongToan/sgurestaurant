@@ -7,14 +7,11 @@ namespace SGURestaurant.Models
 {
     public class Table
     {
-        [DisplayName("Mã số")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int Id { get; set; }
-
-        [DisplayName("Số ghế")]
+        
         public virtual int ChairNumber { get; set; }
-
-        [DisplayName("Đặc điểm")]
+        
         [DataType(DataType.MultilineText)]
         public virtual string Feature { get; set; }
 
