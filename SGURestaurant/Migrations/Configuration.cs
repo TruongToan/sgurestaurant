@@ -9,8 +9,7 @@ namespace SGURestaurant.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "SGURestaurant.Models.SGURestaurantContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(SGURestaurant.Models.SGURestaurantContext context)
