@@ -29,6 +29,7 @@ namespace SGURestaurant.Models
             modelBuilder.Entity<MealStyle>().HasKey(e => e.Id);
             modelBuilder.Entity<MealType>().HasKey(e => e.Id);
             modelBuilder.Entity<Table>().HasKey(e => e.Id);
+            modelBuilder.Entity<Vote>().HasKey(e => e.Id);
             // IMPORTANT
             modelBuilder.Entity<IdentityUserLogin>().HasKey(e => e.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey(e => e.Id);
@@ -45,6 +46,7 @@ namespace SGURestaurant.Models
                 });
             modelBuilder.Entity<Meal>().HasRequired(e => e.MealStyle).WithMany(e => e.Meals).HasForeignKey(e => e.MealStyleId);
             modelBuilder.Entity<Meal>().HasRequired(e => e.MealType).WithMany(e => e.Meals).HasForeignKey(e => e.MealTypeId);
+            modelBuilder.Entity<Meal>().HasMany(e => e.Votes).WithRequired(e => e.Meal).HasForeignKey(e => e.MealId);
 
             base.OnModelCreating(modelBuilder);
         }

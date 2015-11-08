@@ -188,6 +188,7 @@
     <Compile Include="Models\Meal.cs" />
     <Compile Include="Models\MealStyle.cs" />
     <Compile Include="Models\MealType.cs" />
+    <Compile Include="Models\Vote.cs" />
     <Compile Include="Models\SGURestaurantContext.cs" />
     <Compile Include="Models\SGURestaurantManagerDbInitializer.cs" />
     <Compile Include="Models\Table.cs" />
