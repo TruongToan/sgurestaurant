@@ -29,7 +29,8 @@ namespace SGURestaurant.Models
         [DisplayName("Kiểu món")]
         public virtual MealStyle MealStyle { get; set; }
 
-        public virtual string ImgeUrl { get; set; }
+        [DisplayName("Ảnh")]
+        public virtual string ImageUrl { get; set; }
 
         public virtual bool Status { get; set; }
 

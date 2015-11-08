@@ -50,7 +50,7 @@ namespace SGURestaurant.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,Status")] Meal meal)
+        public ActionResult Create([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace SGURestaurant.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,Status")] Meal meal)
+        public ActionResult Edit([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
         {
             if (ModelState.IsValid)
             {

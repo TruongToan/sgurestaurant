@@ -23,6 +23,13 @@ namespace SGURestaurant.Models
             };
             MealStyles.ForEach(e => context.MealStyles.Add(e));
             context.SaveChanges();
+
+            var Meals = new List<Meal>()
+            {
+                new Meal() { Name = "Món 1", Price=20000, ImageUrl = "http://mónngonchongàymưa.vn/upload/Colombo/39665/20150909/boxiengnuong.jpg" }
+            };
+            Meals.ForEach(e => context.Meals.Add(e));
+            context.SaveChanges();
         }
     }
 }
