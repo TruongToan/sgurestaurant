@@ -69,5 +69,7 @@ namespace SGURestaurant.Models
         public DbSet<DialyMenu> DialyMenus { get; set; }
 
         public DbSet<Table> Tables { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
     }
 }
