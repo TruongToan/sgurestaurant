@@ -117,58 +117,92 @@
         
 
         <div class="row">
+            @{
+                var PageSize = 9;
+                var CurrentPageString = Request.QueryString["page"];
+                var CurrentPage = CurrentPageString == "" || CurrentPageString == null || CurrentPageString == "0" ? 1 : int.Parse(CurrentPageString);
 
-            @foreach (Meal meal in Model)
-            {
+                for (int i = PageSize * (CurrentPage - 1); i < PageSize * CurrentPage && i < Model.Count(); i++)
+                {
+                    var meal = Model.ElementAt(i);
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@meal.ImageUrl" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right">@meal.Price</h4>
+                                <h4>
+                                    @Html.ActionLink(@meal.Name, "Info", new { id = meal.Id })
+                                </h4>
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">@meal.Votes.Count lượt đánh giá</p>
+                                <p>
+                                    @for (var j = 0; j < 3; j++)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="@meal.ImageUrl" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">@meal.Price</h4>
-                            <h4>
-                                @Html.ActionLink(meal.Name, "Info", new { id = meal.Id })
-                            </h4>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">@meal.Votes.Count lượt đánh giá</p>
-                            <p>
-                                @for (var i = 0; i < 3; i++)
+                                    }
+                                    @for (var j = 0; j < 5 - 3; j++)
+                                    {
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+
+                                    }
+                                </p>
+                            </div>
+
+                            <div class="pager">
+                                @using (Html.BeginForm("Info/" + meal.Id, "Home"))
                                 {
-                                    <span class="glyphicon glyphicon-star"></span>
-
+                                    <button class="btn btn-default" type="submit">Chi tiết</button>
+                                    <button class="btn btn-primary add-to-cart" type="button" data-id="@meal.Id">Thêm vào giỏ</button>
                                 }
-                                @for (var i = 0; i < 5 -3; i++)
-                                {
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-
-                                }
-                            </p>
-                        </div>
-
-                        <div class="pager">
-                            @using (Html.BeginForm("Info/" + meal.Id, "Home"))
-                            {
-                                <button class="btn btn-default" type="submit">Chi tiết</button>
-                                <button class="btn btn-primary add-to-cart" type="button" data-id="@meal.Id">Thêm vào giỏ</button>
-                            }
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        
-        
+                }
+                }
+
+
         </div>
 
         <nav class="navbar-right">
             <ul class="pagination">
-                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                @{
+                    var Size = Model.Count();
+                    var PageCout = (int)Math.Ceiling(Size * 1.0f / PageSize);
+                    var Prev = (CurrentPage - 1) < 1 ? 1 : CurrentPage - 1;
+                    var Next = (CurrentPage + 1) > PageCout ? PageCout : CurrentPage + 1;
+
+                    if (CurrentPage == 1)
+                    {
+                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="?page=@Prev " aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    }
+
+                    for (var i = 1; i <= PageCout; i++)
+                    {
+                        if (i == CurrentPage)
+                        {
+                                <li class="active"><a href="#">@i<span class="sr-only">(current)</span></a></li>
+                        }
+                        else
+                        {
+                                <li><a href="?page=@i">@i</a></li>
+                        }
+                    }
+
+                    if (CurrentPage == PageCout)
+                    {
+                        <li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="?page=@Next" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    }
+                }
             </ul>
         </nav>
     </div>

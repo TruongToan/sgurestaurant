@@ -16,6 +16,9 @@ namespace SGURestaurant.Models
         [DataType(DataType.MultilineText)]
         public virtual string Indredients { get; set; }
 
+        [DisplayName("Giá gốc")]
+        public virtual int OriginPrice { get; set; }
+
         [DisplayName("Giá")]
         public virtual int Price { get; set; }
 
