@@ -1,38 +1,115 @@
 ﻿@model IEnumerable<SGURestaurant.ViewModels.CartItemViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Giỏ hàng";
 }
 
-<h2>Index</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".remove-from-cart").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        $('#shopping-cart').text("Giỏ hàng (" + data[1] + " sản phẩm)");
+                        $('#my-shopping-cart tr[data-id="' + data[0] + '"').remove();
+                    });
+            }
+        });
+    });
+</script>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Meal.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-    </tr>
+<!-- Page Heading/Breadcrumbs -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Giỏ hàng
+            <small>Các món ăn bạn đã chọn</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li class="active">Giỏ hàng</li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+<!-- Intro Content -->
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Meal.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+<div class="row">
+    <div class="col-md-7">
+        <table class="table" id="my-shopping-cart">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Meal.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Meal.OriginPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    Thành tiền
+                </th>
+                <th>
+                </th>
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr data-id="@item.Meal.Id">
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-5">
+                                    <img src=" @item.Meal.ImageUrl " class="shopping-img-responsive" />
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.DisplayFor(modelItem => item.Meal.Name)
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(modelItem => item.Meal.Price)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.Quantity, new { maxlength = 2, min = 1, max = 10, type = "number", @class = "shopping-input" })
+                    </td>
+                    <td>
+                        <p>10000</p>
+                    </td>
+                    <td>
+                        <button class="btn-danger remove-from-cart" data-id="@item.Meal.Id"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <button type="button" class="btn btn-info">Cập nhật giỏ hàng</button>
+    </div>
+    <div class="col-md-5">
+        <h2>Tổng tiền: 100.000</h2>
+        <p><i>(Đã bao gồm VAT)</i></p>
+
+        @using (Html.BeginForm("Create", "Order", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-primary">Đặt món ngay</button>
+        }
+
+        <br />
+        @using (Html.BeginForm("ClearCart", "ShoppingCart", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-danger">Xóa giỏ hàng&nbsp;</button>
+        }
+    </div>
+</div>

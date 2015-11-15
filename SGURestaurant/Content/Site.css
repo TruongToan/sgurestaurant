@@ -157,3 +157,17 @@ body {
 .caption {
     height: auto;
 }
+
+.shopping-img-responsive {
+    display: block;
+    width: 50px;
+    max-height: 50px;
+}
+
+.shopping-input {
+    width: 40px;
+}
+
+.margin-sm {
+    margin:5px;
+}

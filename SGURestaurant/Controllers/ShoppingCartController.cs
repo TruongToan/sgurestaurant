@@ -37,14 +37,14 @@ namespace SGURestaurant.Controllers
         public ActionResult RemoveFromCart(int id)
         {
             ShoppingCart.Instance.RemoveFromCart(id);
-            return Json(ShoppingCart.Instance.GetSubTotal());
+            return Json(new int[] { id, ShoppingCart.Instance.GetSubTotal() });
         }
 
         [HttpPost]
         public ActionResult ClearCart()
         {
             ShoppingCart.Instance.ClearCart();
-            return Json(ShoppingCart.Instance.GetSubTotal());
+            return RedirectToAction("Index", "Home");
         }
     }
 }
