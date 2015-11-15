@@ -104,11 +104,28 @@
 <div class="row">
 
     <div class="col-md-3">
-        <p class="lead">Menu</p>
+        <p class="lead">Thực đơn</p>
         <div class="list-group">
-            <a href="#" class="list-group-item">Món điểm tâm</a>
-            <a href="#" class="list-group-item">Món chính</a>
-            <a href="#" class="list-group-item">Món tráng miệng</a>
+            @{ 
+                var menuGroups = ViewData["groups"] as List<MealType>;
+                menuGroups.Insert(0, new MealType() { Id = 0, Name = "Tất cả" });
+            }
+
+            @foreach (MealType type in menuGroups)
+            {
+                using (Html.BeginForm("Index/" + (type.Id != 0 ? type.Name : string.Empty), "Home"))
+                {
+                    if ((ViewBag.Type == string.Empty && type.Id == 0) || type.Name.Equals(ViewBag.Type))
+                    {
+                        <button type="submit" class="list-group-item active nav nav-pills nav-justified">@type.Name</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="list-group-item nav-justified">@type.Name</button>
+                    }
+                }
+            }
+
         </div>
     </div>
 
@@ -186,11 +203,11 @@
                     {
                         if (i == CurrentPage)
                         {
-                                <li class="active"><a href="#">@i<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#">@i<span class="sr-only">(current)</span></a></li>
                         }
                         else
                         {
-                                <li><a href="?page=@i">@i</a></li>
+                            <li><a href="?page=@i">@i</a></li>
                         }
                     }
 

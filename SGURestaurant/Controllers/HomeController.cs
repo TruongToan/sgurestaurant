@@ -12,10 +12,26 @@ namespace SGURestaurant.Controllers
     {
         private SGURestaurantContext db = new SGURestaurantContext();
 
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    var meals = db.Meals;
+        //    return View(meals.ToList());
+        //}
+
+        public ActionResult Index(string Id)
         {
-            var meals = db.Meals;
-            return View(meals.ToList());
+            List<MealType> types = db.Meals.Select(e => e.MealType).Distinct().ToList();
+            ViewData["groups"] = types;
+            if (Id == null || Id.Equals(""))
+            {
+                ViewBag.Type = string.Empty;
+                return View(db.Meals.ToList());
+            }
+            else
+            {
+                ViewBag.Type = Id;
+                return View(db.Meals.Where(e => e.MealType.Name == Id).ToList());
+            }
         }
 
         public ActionResult About()
