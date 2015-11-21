@@ -25,13 +25,19 @@ namespace SGURestaurant.Controllers
             if (Id == null || Id.Equals(""))
             {
                 ViewBag.Type = string.Empty;
-                return View(db.Meals.ToList());
+                return View(db.Meals.Where(e => e.Status).ToList());
             }
             else
             {
                 ViewBag.Type = Id;
-                return View(db.Meals.Where(e => e.MealType.Name == Id).ToList());
+                return View(db.Meals.Where(e => e.MealType.Name == Id && e.Status).ToList());
             }
+        }
+
+        public ActionResult Sale()
+        {
+            List<MealType> types = db.Meals.Select(e => e.MealType).Distinct().ToList();
+            return View(db.Meals.Where(e => e.Status && e.Price < e.OriginPrice).ToList());
         }
 
         public ActionResult About()

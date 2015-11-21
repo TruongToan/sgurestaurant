@@ -27,3 +27,50 @@
 <p>
     @Html.ActionLink("Quay lại", "Index")
 </p>
+
+<hr />
+
+<h3>Nhận xét</h3>
+
+<div>
+    @for (var j = 0; j < 5; j++)
+    {
+        <span class="glyphicon glyphicon-star-empty big-star"></span>
+
+    }
+    <div class="thumbnail">
+        <textarea rows="3" autofocus="autofocus" placeholder="Nhập nhận xét của bạn..." class="comment_field"></textarea>
+    </div>
+    <br />
+    <div>
+        <button class="btn btn-primary">Gửi đánh giá</button>
+    </div>
+</div>
+
+<hr />
+
+@foreach(var vote in Model.Reviews)
+{
+    <div>
+        <div class="comment_group">
+            <div>
+                <b>@vote.User.UserName</b>
+            </div>
+            <div>
+                @for (var j = 0; j < vote.Rate; j++)
+                {
+                    <span class="glyphicon glyphicon-star"></span>
+
+                }
+                @for (var j = 0; j < 5 - vote.Rate; j++)
+                {
+                    <span class="glyphicon glyphicon-star-empty"></span>
+
+                }
+            </div>
+            <div class="comment_area">
+                <p style="text-wrap:unset;">@vote.Comment</p>
+            </div>
+        </div>
+    </div>
+}

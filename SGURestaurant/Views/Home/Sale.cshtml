@@ -1,0 +1,146 @@
+﻿@using SGURestaurant.Models
+@model IEnumerable<Meal>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".add-to-cart").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/AddToCart", {"id": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        $('#shopping-cart').text("Giỏ hàng (" + data + " sản phẩm)");
+                    });
+            }
+        });
+    });
+</script>
+
+<br />
+
+<!-- Page Heading/Breadcrumbs -->
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li class="active">Home</li>
+        </ol>
+    </div>
+</div>
+
+<h3>Các món ăn đang khuyến mãi</h3>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="row">
+            @{
+                var PageSize = 4;
+                var rate = 0;
+                var CurrentPageString = Request.QueryString["page"];
+                var CurrentPage = CurrentPageString == "" || CurrentPageString == null || CurrentPageString == "0" ? 1 : int.Parse(CurrentPageString);
+
+                for (int i = PageSize * (CurrentPage - 1); i < PageSize * CurrentPage && i < Model.Count(); i++)
+                {
+                    var meal = Model.ElementAt(i);
+                    <div class="col-sm-3 col-lg-3 col-md-3">
+                        <div class="thumbnail float-container">
+                            <img src="@meal.ImageUrl" class="" alt="">
+                            <div class="col-sm-1 navbar-right btn-danger float-text">-@((int)((1 - meal.Price * 1.0f / meal.OriginPrice) * 100))%</div>
+                            <div class="caption">
+                                <h4 class="pull-right">@(meal.Price.ToString("0,000"))</h4>
+                                <h4>
+                                    @Html.ActionLink(@meal.Name, "Info", new { id = meal.Id })
+                                </h4>
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">@meal.Reviews.Count lượt đánh giá</p>
+                                <p>
+                                    @{
+                                        rate = 0;
+                                        if (meal.Reviews.Count() > 0)
+                                        {
+                                            rate = (int)meal.Reviews.Average(e => e.Rate);
+                                        }
+                                    }
+                                    @for (var j = 0; j < rate; j++)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+
+                                    }
+                                    @for (var j = 0; j < 5 - rate; j++)
+                                    {
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+
+                                    }
+                                </p>
+                            </div>
+
+                            <div class="pager">
+                                @using (Html.BeginForm("Info/" + meal.Id, "Home"))
+                                {
+                                    <button class="btn btn-default" type="submit">Chi tiết</button>
+                                    <button class="btn btn-primary add-to-cart" type="button" data-id="@meal.Id">Thêm vào giỏ</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+
+        <nav class="navbar-right">
+            <ul class="pagination">
+                @{
+                    var Size = Model.Count();
+                    var PageCout = (int)Math.Ceiling(Size * 1.0f / PageSize);
+                    var Prev = (CurrentPage - 1) < 1 ? 1 : CurrentPage - 1;
+                    var Next = (CurrentPage + 1) > PageCout ? PageCout : CurrentPage + 1;
+
+                    if (CurrentPage == 1)
+                    {
+                        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="?page=@Prev " aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    }
+
+                    for (var i = 1; i <= PageCout; i++)
+                    {
+                        if (i == CurrentPage)
+                        {
+                            <li class="active"><a href="#">@i<span class="sr-only">(current)</span></a></li>
+                        }
+                        else
+                        {
+                            <li><a href="?page=@i">@i</a></li>
+                        }
+                    }
+
+                    if (CurrentPage == PageCout)
+                    {
+                        <li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    }
+                    else
+                    {
+                        <li><a href="?page=@Next" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+
+</div>

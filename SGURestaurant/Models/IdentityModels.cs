@@ -12,11 +12,9 @@ namespace SGURestaurant.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public virtual string FullName { get; set; }
-        public virtual Gender Gender { get; set; }
-        public virtual DateTime Birthday { get; set; }
         public virtual string Address { get; set; }
-        public virtual ICollection<Booking> Bookings {get;set;}
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

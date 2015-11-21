@@ -17,7 +17,7 @@ namespace SGURestaurant
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new []{ "SGURestaurant.Controllers" }
+                namespaces: new[] { "SGURestaurant.Controllers" }
             );
 
             //RouteTable.Routes.Add(new ServiceRoute("Data", new ServiceHostFactory(), typeof(DataDips)));

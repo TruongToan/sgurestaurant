@@ -29,12 +29,11 @@ namespace SGURestaurant.Models
         {
             modelBuilder.Entity<Booking>().HasKey(e => e.Id);
             modelBuilder.Entity<BookingDetail>().HasKey(e => e.Id);
-            modelBuilder.Entity<DialyMenu>().HasKey(e => e.Id);
             modelBuilder.Entity<Meal>().HasKey(e => e.Id);
             modelBuilder.Entity<MealStyle>().HasKey(e => e.Id);
             modelBuilder.Entity<MealType>().HasKey(e => e.Id);
             modelBuilder.Entity<Table>().HasKey(e => e.Id);
-            modelBuilder.Entity<Vote>().HasKey(e => e.Id);
+            modelBuilder.Entity<Review>().HasKey(e => e.Id);
             // IMPORTANT
             modelBuilder.Entity<IdentityUserLogin>().HasKey(e => e.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey(e => e.Id);
@@ -43,15 +42,11 @@ namespace SGURestaurant.Models
             modelBuilder.Entity<Booking>().HasMany(e => e.BookingDetails).WithRequired().HasForeignKey(e => e.BookingId);
             modelBuilder.Entity<Booking>().HasRequired(e => e.User).WithMany(e => e.Bookings).HasForeignKey(e => e.UserId);
             modelBuilder.Entity<Booking>().HasRequired(e => e.Table).WithMany().HasForeignKey(e => e.TableId);
-            modelBuilder.Entity<Meal>().HasMany(e => e.DialyMenus).WithMany(e => e.Meals).Map(
-                m => {
-                    m.ToTable("Meal_DialyMenu");
-                    m.MapLeftKey("MealId");
-                    m.MapRightKey("DialyMenuId");
-                });
             modelBuilder.Entity<Meal>().HasRequired(e => e.MealStyle).WithMany(e => e.Meals).HasForeignKey(e => e.MealStyleId);
             modelBuilder.Entity<Meal>().HasRequired(e => e.MealType).WithMany(e => e.Meals).HasForeignKey(e => e.MealTypeId);
-            modelBuilder.Entity<Meal>().HasMany(e => e.Votes).WithRequired(e => e.Meal).HasForeignKey(e => e.MealId);
+            modelBuilder.Entity<Meal>().HasMany(e => e.Reviews).WithRequired(e => e.Meal).HasForeignKey(e => e.MealId);
+
+            modelBuilder.Entity<Review>().HasRequired(e => e.User).WithMany(e => e.Reviews).HasForeignKey(e => e.UserId);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -66,10 +61,10 @@ namespace SGURestaurant.Models
 
         public DbSet<BookingDetail> BookingDetails { get; set; }
 
-        public DbSet<DialyMenu> DialyMenus { get; set; }
-
         public DbSet<Table> Tables { get; set; }
 
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<Review> Votes { get; set; }
+
+        public System.Data.Entity.DbSet<SGURestaurant.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

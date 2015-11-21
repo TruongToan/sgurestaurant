@@ -37,8 +37,6 @@ namespace SGURestaurant.Models
 
         public virtual bool Status { get; set; }
 
-        public virtual ICollection<DialyMenu> DialyMenus { get; set; }
-
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

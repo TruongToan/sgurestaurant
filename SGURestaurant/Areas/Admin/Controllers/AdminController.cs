@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
         // GET: Admin/Admin
         public ActionResult Index()

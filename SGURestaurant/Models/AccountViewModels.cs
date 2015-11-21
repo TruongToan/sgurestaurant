@@ -49,12 +49,12 @@ namespace SGURestaurant.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
@@ -65,12 +65,12 @@ namespace SGURestaurant.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [EmailAddress(ErrorMessage = "{0} không hợp lệ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [StringLength(100, ErrorMessage = "{0} tối thiểu {2} ký tự", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
@@ -81,30 +81,10 @@ namespace SGURestaurant.Models
         [Compare("Password", ErrorMessage = "{0} không đúng")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} là bắt buộc")]
         [Display(Name = "Họ tên")]
         [StringLength(50, ErrorMessage = "{0} không được quá {1} ký tự")]
-        public string FullName { get; set; }
-
-        [Required]
-        [Display(Name = "Giới tính")]
-        public Gender Gender { get; set; }
-
-        [Required]
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date)]
-        public DateTime Birthday { get; set; }
-
-        [Required]
-        [Display(Name = "Địa chỉ")]
-        [StringLength(200, ErrorMessage = "{0} không được quá {1} ký tự")]
-        [DataType(DataType.MultilineText)]
-        public string Address { get; set; }
-
-        [Required]
-        [Display(Name = "Số điện thoại")]
-        [Phone(ErrorMessage = "{0} không hợp lệ")]
-        public string PhoneNumber { get; set; }
+        public string UserName { get; set; }
     }
 
     public class ResetPasswordViewModel

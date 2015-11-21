@@ -6,12 +6,12 @@ using System.Web;
 
 namespace SGURestaurant.Models
 {
-    public class Vote
+    public class Review
     {
         public virtual int Id { get; set; }
 
         [Display(Name = "Điểm đánh giá")]
-        public virtual float Score { get; set; }
+        public virtual float Rate { get; set; }
 
         [Display(Name = "Bình luận")]
         public virtual String Comment { get; set; }
@@ -19,5 +19,9 @@ namespace SGURestaurant.Models
         public virtual int MealId { get; set; }
 
         public virtual Meal Meal { get; set; }
+
+        public virtual string UserId { get; set; }
+
+        public virtual ApplicationUser User { get; set; }
     }
 }

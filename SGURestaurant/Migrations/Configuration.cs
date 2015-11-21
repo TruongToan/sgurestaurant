@@ -40,17 +40,18 @@
                 "http://mónngonchongàymưa.vn/upload/Colombo/39665/20150909/boxiengnuong.jpg",
                 "http://kinhdoanhcafe.com/wp-content/uploads/2013/04/kfc-chicken.jpg"
             };
+            var random = new Random();
             for (int i = 0; i < 50; i++)
             {
                 Meal meal = new Meal();
                 meal.Name = "Meal " + i;
-                meal.OriginPrice = new Random().Next(100000);
-                meal.Price = meal.OriginPrice - new Random().Next((int)(meal.OriginPrice * 0.5));
-                meal.Status = new Random().Next(5) == 0 ? false : true;
-                meal.ImageUrl = urls[new Random().Next(urls.Length)];
+                meal.OriginPrice = random.Next(100000) / 1000 * 1000;
+                meal.Price = meal.OriginPrice - random.Next((int)(meal.OriginPrice * 0.5)) / 1000 * 1000;
+                meal.Status = random.Next(5) == 0 ? false : true;
+                meal.ImageUrl = urls[random.Next(urls.Length)];
                 meal.Indredients = "Cá, tôm, cua";
-                meal.MealStyleId = new Random().Next(1, 3);
-                meal.MealTypeId = new Random().Next(1, 4);
+                meal.MealStyleId = random.Next(1, 3);
+                meal.MealTypeId = random.Next(1, 4);
                 Meals.Add(meal);
             }
             Meals.ForEach(e => context.Meals.Add(e));

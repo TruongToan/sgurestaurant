@@ -12,19 +12,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MealStyle.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MealType.Name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Indredients)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.MealStyle.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MealType.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -33,21 +39,27 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MealStyle.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MealType.Name)
-        </td>
+    <tr class="admin-meal-item">
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            <img class="small-thumbnail" src="@Html.DisplayFor(modelItem => item.ImageUrl) " />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Indredients)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price)
+            @Html.DisplayFor(modelItem => item.MealStyle.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MealType.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)

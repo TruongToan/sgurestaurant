@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,20 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using SGURestaurant.Models;
 
-namespace SGURestaurant.Controllers
+namespace SGURestaurant.Areas.Admin.Controllers
 {
     public class MealsController : Controller
     {
         private SGURestaurantContext db = new SGURestaurantContext();
 
-        // GET: Meals
+        // GET: Admin/Meals
         public ActionResult Index()
         {
             var meals = db.Meals.Include(m => m.MealStyle).Include(m => m.MealType);
             return View(meals.ToList());
         }
 
-        // GET: Meals/Details/5
+        // GET: Admin/Meals/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +36,7 @@ namespace SGURestaurant.Controllers
             return View(meal);
         }
 
-        // GET: Meals/Create
+        // GET: Admin/Meals/Create
         public ActionResult Create()
         {
             ViewBag.MealStyleId = new SelectList(db.MealStyles, "Id", "Name");
@@ -45,12 +44,12 @@ namespace SGURestaurant.Controllers
             return View();
         }
 
-        // POST: Meals/Create
+        // POST: Admin/Meals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
+        public ActionResult Create([Bind(Include = "Id,Name,Indredients,OriginPrice,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +63,7 @@ namespace SGURestaurant.Controllers
             return View(meal);
         }
 
-        // GET: Meals/Edit/5
+        // GET: Admin/Meals/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,12 +80,12 @@ namespace SGURestaurant.Controllers
             return View(meal);
         }
 
-        // POST: Meals/Edit/5
+        // POST: Admin/Meals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Indredients,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
+        public ActionResult Edit([Bind(Include = "Id,Name,Indredients,OriginPrice,Price,MealTypeId,MealStyleId,ImageUrl,Status")] Meal meal)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +98,7 @@ namespace SGURestaurant.Controllers
             return View(meal);
         }
 
-        // GET: Meals/Delete/5
+        // GET: Admin/Meals/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,7 +113,7 @@ namespace SGURestaurant.Controllers
             return View(meal);
         }
 
-        // POST: Meals/Delete/5
+        // POST: Admin/Meals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

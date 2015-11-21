@@ -34,10 +34,18 @@ namespace SGURestaurant.Controllers
         }
 
         [HttpPost]
+        public ActionResult UpdateCart(int id)
+        {
+            var value = int.Parse(Request["item.Quantity"]);
+            ShoppingCart.Instance.SetItemQuantity(id, value);
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
+        [HttpPost]
         public ActionResult RemoveFromCart(int id)
         {
             ShoppingCart.Instance.RemoveFromCart(id);
-            return Json(new int[] { id, ShoppingCart.Instance.GetSubTotal() });
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
         [HttpPost]
