@@ -41,9 +41,33 @@ namespace SGURestaurant.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            var model = new ContactModel();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Contact(ContactModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string smtpUserName = "thlogn@gmail.com";
+                string smtpPassword = "dvhmmbnspexgspsr";
+                string smtpHost = "smtp.gmail.com";
+                int smtpPort = 587;
 
-            return View();
+                string emailTo = "thanhlong.itsgu@gmail.com"; // Khi có liên hệ sẽ gửi về thư của mình
+                string subject = model.Subject;
+                string body = string.Format("Bạn vừa nhận được liên hệ từ: <b>{0}</b><br/>Email: {1}<br/>Nội dung: </br>{2}",
+                    model.UserName, model.Email, model.Message);
+
+                EmailService service = new EmailService();
+
+                bool kq = service.Send(smtpUserName, smtpPassword, smtpHost, smtpPort,
+                    emailTo, subject, body);
+
+                if (kq) ModelState.AddModelError("", "Cảm ơn bạn đã liên hệ với chúng tôi.");
+                else ModelState.AddModelError("", "Gửi tin nhắn thất bại, vui lòng thử lại.");
+            }
+            return View(model);
         }
     }
 }

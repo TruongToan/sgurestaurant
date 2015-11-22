@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MealsController.cs" />
+    <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -183,6 +184,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingDetail.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\DialyMenu.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -211,6 +213,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="HinhAnh\acfood.jpg" />
+    <Content Include="HinhAnh\aquafina.jpg" />
+    <Content Include="HinhAnh\beptruong.jpg" />
+    <Content Include="HinhAnh\chinsu.jpg" />
+    <Content Include="HinhAnh\donafood.jpg" />
+    <Content Include="HinhAnh\manage.jpg" />
+    <Content Include="HinhAnh\nhanvien.jpg" />
+    <Content Include="HinhAnh\pepsi.jpg" />
+    <Content Include="HinhAnh\restaurant.gif" />
+    <Content Include="HinhAnh\vinaace.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -243,7 +255,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -273,6 +284,8 @@
     <Content Include="Web.sitemap" />
     <Content Include="Views\Home\Info.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\SendMail\Contact.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

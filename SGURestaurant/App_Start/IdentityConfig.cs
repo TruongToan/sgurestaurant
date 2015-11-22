@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SGURestaurant.Models;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace SGURestaurant
 {
@@ -20,6 +23,41 @@ namespace SGURestaurant
         {
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
+        }
+
+        internal bool Send(string smtpUserName, string smtpPassword, string smtpHost, int smtpPort, string emailTo, string subject, string body)
+        {
+            
+                try
+                {
+                    using (var smtpClient = new SmtpClient())
+                    {
+                        smtpClient.EnableSsl = true;
+                        smtpClient.Host = smtpHost;
+                        smtpClient.Port = smtpPort;
+                        smtpClient.UseDefaultCredentials = true;
+                        smtpClient.Credentials = new NetworkCredential(smtpUserName, smtpPassword);
+                        var msg = new MailMessage
+                        {
+                            IsBodyHtml = true,
+                            BodyEncoding = Encoding.UTF8,
+                            From = new MailAddress(smtpUserName),
+                            Subject = subject,
+                            Body = body,
+                            Priority = MailPriority.Normal,
+                        };
+
+                        msg.To.Add(emailTo);
+
+                        smtpClient.Send(msg);
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+   
         }
     }
 
