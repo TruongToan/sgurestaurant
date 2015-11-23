@@ -16,6 +16,7 @@ namespace SGURestaurant.Controllers
         private SGURestaurantContext db = new SGURestaurantContext();
 
         // GET: Booking
+        [Authorize]
         public ActionResult Index()
         {
             var booking = new Booking();

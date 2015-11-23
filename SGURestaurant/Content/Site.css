@@ -278,6 +278,9 @@ body {
     font-weight: bold;
 }
 
+#logoutForm {
+    padding-left: 15px;
+}
 
 /*Chart*/
 

@@ -27,7 +27,7 @@
                     <li>@Html.ActionLink("Liên hệ", "Contact", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Giỏ hàng (" + SGURestaurant.ViewModels.ShoppingCart.Instance.Items.Count + " sản phẩm)", "Index", "ShoppingCart", new { area = "" }, new { @id = "shopping-cart" })</li>
+                    <li>@Html.ActionLink("Giỏ hàng (" + SGURestaurant.ViewModels.ShoppingCart.Instance.Items.Count + ")", "Index", "ShoppingCart", new { area = "" }, new { @id = "shopping-cart" })</li>
                     @Html.Partial("_LoginPartial")
                 </ul>
             </div>

@@ -33,7 +33,10 @@
 <h3>Nhận xét</h3>
 
 <div>
-    @for (var j = 0; j < 5; j++)
+@if (Request.IsAuthenticated)
+{
+    <h4>@User.Identity.Name</h4>
+    for (var j = 0; j < 5; j++)
     {
         <span class="glyphicon glyphicon-star-empty big-star"></span>
 
@@ -45,10 +48,16 @@
     <div>
         <button class="btn btn-primary">Gửi đánh giá</button>
     </div>
+}
+else
+{
+    @Html.ActionLink("Đăng nhập để bình luận", "Login", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null);
+}
 </div>
 
 <hr />
 
+<i>@Model.Reviews.Count() nhận xét khác</i>
 @foreach(var vote in Model.Reviews)
 {
     <div>
