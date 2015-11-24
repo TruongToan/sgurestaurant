@@ -40,7 +40,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature");
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Address");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Address");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
             }
 
             ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Address", booking.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Address", booking.UserId);
             return View(booking);
         }
 
@@ -76,7 +76,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Address", booking.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Address", booking.UserId);
             return View(booking);
         }
 
@@ -94,7 +94,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Address", booking.UserId);
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Address", booking.UserId);
             return View(booking);
         }
 

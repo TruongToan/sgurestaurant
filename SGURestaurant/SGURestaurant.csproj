@@ -180,6 +180,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,16 +218,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="HinhAnh\acfood.jpg" />
-    <Content Include="HinhAnh\aquafina.jpg" />
-    <Content Include="HinhAnh\beptruong.jpg" />
-    <Content Include="HinhAnh\chinsu.jpg" />
-    <Content Include="HinhAnh\donafood.jpg" />
-    <Content Include="HinhAnh\manage.jpg" />
-    <Content Include="HinhAnh\nhanvien.jpg" />
-    <Content Include="HinhAnh\pepsi.jpg" />
-    <Content Include="HinhAnh\restaurant.gif" />
-    <Content Include="HinhAnh\vinaace.jpg" />
+    <Content Include="Content\Images\Info\acfood.jpg" />
+    <Content Include="Content\Images\Info\aquafina.jpg" />
+    <Content Include="Content\Images\Info\beptruong.jpg" />
+    <Content Include="Content\Images\Info\chinsu.jpg" />
+    <Content Include="Content\Images\Info\donafood.jpg" />
+    <Content Include="Content\Images\Info\manage.jpg" />
+    <Content Include="Content\Images\Info\nhanvien.jpg" />
+    <Content Include="Content\Images\Info\pepsi.jpg" />
+    <Content Include="Content\Images\Info\restaurant.gif" />
+    <Content Include="Content\Images\Info\vinaace.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
