@@ -12,7 +12,6 @@ using SGURestaurant.Models;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

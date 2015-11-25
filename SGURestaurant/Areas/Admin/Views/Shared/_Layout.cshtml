@@ -21,9 +21,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Quản lý món ăn", "Index", "Meals")</li>
-                    <li>@Html.ActionLink("Quản lý người dùng", "Index", "Users")</li>
-                    <li>@Html.ActionLink("Quản lý đặt món", "Index", "Bookings")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Tổng quan", "Index", "Admin")</li>
+                    }
+                    else if (User.IsInRole("Manager"))
+                    {
+                        <li>@Html.ActionLink("Quản lý món ăn", "Index", "Meals")</li>
+                        <li>@Html.ActionLink("Quản lý người dùng", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Quản lý đặt món", "Index", "Bookings")</li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @Html.Partial("_LoginPartial")
@@ -32,7 +39,14 @@
         </div>
     </nav>
     <div class="container body-content">
-        @RenderBody()
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            @RenderBody();
+        }
+        else
+        {
+            @RenderPage("_404.cshtml", null);
+        }   
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - SGU Restaurant</p>

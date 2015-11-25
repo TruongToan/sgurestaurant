@@ -10,6 +10,7 @@ using SGURestaurant.Models;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class MealsController : Controller
     {
         private SGURestaurantContext db = new SGURestaurantContext();
