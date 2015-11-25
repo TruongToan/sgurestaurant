@@ -7,15 +7,20 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SGURestaurant.Models.SGURestaurantContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SGURestaurantContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Models.SGURestaurantContext context)
+        protected override void Seed(SGURestaurantContext context)
         {
+            context.Roles.Add(new ApplicationRole() { Name = "Admin", Description = "Adminstration" });
+            context.Roles.Add(new ApplicationRole() { Name = "Manager", Description = "Check booking" });
+            context.Roles.Add(new ApplicationRole() { Name = "Customer", Description = "Normal user" });
+            context.SaveChanges();
+
             var MealTypes = new List<MealType>()
             {
                 new MealType() { Id=1, Name="Món khai vị", Description="Bắt đầu bữa ăn" },

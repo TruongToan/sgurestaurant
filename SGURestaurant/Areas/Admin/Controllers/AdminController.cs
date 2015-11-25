@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         // GET: Admin/Admin

@@ -35,7 +35,6 @@ namespace SGURestaurant.Models
             modelBuilder.Entity<Table>().HasKey(e => e.Id);
             modelBuilder.Entity<Review>().HasKey(e => e.Id);
             modelBuilder.Entity<ApplicationRole>().HasKey(e => e.Id);
-            modelBuilder.Entity<ApplicationUser>().HasKey(e => e.Id);
 
             // IMPORTANT
             modelBuilder.Entity<IdentityUserLogin>().HasKey(e => e.UserId);
@@ -49,7 +48,6 @@ namespace SGURestaurant.Models
             modelBuilder.Entity<Meal>().HasRequired(e => e.MealType).WithMany(e => e.Meals).HasForeignKey(e => e.MealTypeId);
             modelBuilder.Entity<Meal>().HasMany(e => e.Reviews).WithRequired(e => e.Meal).HasForeignKey(e => e.MealId);
             modelBuilder.Entity<Review>().HasRequired(e => e.User).WithMany(e => e.Reviews).HasForeignKey(e => e.UserId);
-            modelBuilder.Entity<ApplicationUser>().HasMany(e => e.UserRoles);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -67,7 +65,5 @@ namespace SGURestaurant.Models
         public DbSet<Table> Tables { get; set; }
 
         public DbSet<Review> Votes { get; set; }
-
-        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
     }
 }

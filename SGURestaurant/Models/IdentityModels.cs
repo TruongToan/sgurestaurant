@@ -16,7 +16,8 @@ namespace SGURestaurant.Models
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
 
-        public ICollection<ApplicationRole> UserRoles { get; set; }
+        [Display(Name = "Role")]
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
