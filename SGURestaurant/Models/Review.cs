@@ -14,7 +14,10 @@ namespace SGURestaurant.Models
         public virtual float Rate { get; set; }
 
         [Display(Name = "Bình luận")]
-        public virtual String Comment { get; set; }
+        public virtual string Comment { get; set; }
+
+        [Display(Name = "Thời gian")]
+        public virtual DateTime Time { get; set; }
 
         public virtual int MealId { get; set; }
 
