@@ -129,23 +129,23 @@ using (Html.BeginForm("Index", "Home"))
                 <h4>Chọn bàn</h4>
                 <table class="table">
                     <tr>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 2</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 3</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 4</td>
+                        <td colspan="1" rowspan="1" data-id="2" class="table-empty">Bàn 2</td>
+                        <td colspan="1" rowspan="1" data-id="3" class="table-empty">Bàn 3</td>
+                        <td colspan="1" rowspan="1" data-id="4" class="table-empty">Bàn 4</td>
                     </tr>
                     <tr>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 11</td>
-                        <td colspan="1" rowspan="2" class="table_empty">Bàn 1</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 5</td>
+                        <td colspan="1" rowspan="1" data-id="11" class="table-empty table-busy">Bàn 11</td>
+                        <td colspan="1" rowspan="2" data-id="1" class="table-empty">Bàn 1</td>
+                        <td colspan="1" rowspan="1" data-id="5" class="table-empty">Bàn 5</td>
                     </tr>
                     <tr>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 10</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 6</td>
+                        <td colspan="1" rowspan="1" data-id="10" class="table-empty">Bàn 10</td>
+                        <td colspan="1" rowspan="1" data-id="6" class="table-empty">Bàn 6</td>
                     </tr>
                     <tr>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 9</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 8</td>
-                        <td colspan="1" rowspan="1" class="table_empty">Bàn 7</td>
+                        <td colspan="1" rowspan="1" data-id="9" class="table-empty">Bàn 9</td>
+                        <td colspan="1" rowspan="1" data-id="8" class="table-empty">Bàn 8</td>
+                        <td colspan="1" rowspan="1" data-id="7" class="table-empty">Bàn 7</td>
                     </tr>
                 </table>
             </div>
@@ -190,11 +190,10 @@ using (Html.BeginForm("Index", "Home"))
 
 
             <div class="col-md-6">
-                @using (Html.BeginForm("Create", "Booking", FormMethod.Get))
+                @using (Html.BeginForm("Create", "Booking", FormMethod.Post))
                 {
                     @Html.TextBoxFor(e => e.TableId, new { type = "hidden", id = "book-table" });
                     @Html.TextBoxFor(e => e.Time, new { type = "hidden", id = "book-time" });
-                    @Html.TextBoxFor(e => e.User.Id, new { type = "hidden", id = "book-user" });
                     <button type="submit" class="btn btn-primary navbar-right">Xác nhận đặt món</button>
                 }
             </div>
@@ -216,12 +215,25 @@ else
 
 <script>
     $('#datetimepicker10').datetimepicker({
-                        step: 5,
+        step: 5,
         inline: true,
-        timepicker: false
+        timepicker: false,
+        format: 'd/m/Y'
+    });
+
+    $(document).ready(function () {
+        var d = new Date();
+        $("#book-time").val(d.getDate() + "/"+ (d.getMonth() + 1) + "/" + d.getFullYear());
     });
 
     $('#datetimepicker10').on("change", function () {
-                            alert($(this).val());
-                        });
+        $("#book-time").val($(this).val());
+    });
+
+    $(".table-empty").click(function () {
+        if ($(this).hasClass("table-busy")) return;
+        $(".table-empty").removeClass("table-chosen");
+        $(this).addClass("table-chosen");
+        $("#book-table").val($(this).attr("data-id"));
+    });
 </script>

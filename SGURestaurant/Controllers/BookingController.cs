@@ -11,6 +11,7 @@ using SGURestaurant.ViewModels;
 
 namespace SGURestaurant.Controllers
 {
+    [Authorize]
     public class BookingController : Controller
     {
         private SGURestaurantContext db = new SGURestaurantContext();
@@ -48,29 +49,35 @@ namespace SGURestaurant.Controllers
             return View(booking);
         }
 
-        // GET: Booking/Create
-        public ActionResult Create()
-        {
-            ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature");
-            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "FullName");
-            return View();
-        }
-
-        // POST: Booking/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Time,Status,TableId,UserId")] Booking booking)
+        public ActionResult Create([Bind(Include = "Time,TableId")] Booking booking)
         {
-            if (ModelState.IsValid)
+            var currentUser = db.Users.Where(e => e.UserName == User.Identity.Name).FirstOrDefault();
+            if (currentUser != null)
             {
-                db.Bookings.Add(booking);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                booking.UserId = currentUser.Id;
+                booking.Status = false;
 
-            ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
+                var bookingdetails = new List<BookingDetail>();
+
+                foreach (var item in ShoppingCart.Instance.Items)
+                {
+                    BookingDetail newItem = new BookingDetail();
+                    newItem.Meal = db.Meals.First(e => e.Id == item.ItemId);
+                    newItem.Number = item.Quantity;
+                    bookingdetails.Add(newItem);
+                }
+                booking.BookingDetails = bookingdetails;
+
+                if (ModelState.IsValid)
+                {
+                    db.Bookings.Add(booking);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
+            }
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "FullName", booking.UserId);
             return View(booking);
         }
