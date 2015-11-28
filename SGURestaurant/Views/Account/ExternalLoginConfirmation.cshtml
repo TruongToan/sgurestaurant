@@ -23,7 +23,7 @@
             @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
         </div>
     </div>
-    @if (Model.Email == null || Model.Email.Equals(""))
+    if (Model.Email == null || Model.Email.Equals(""))
     {
         <div class="form-group">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
