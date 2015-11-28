@@ -73,17 +73,31 @@ namespace SGURestaurant.Controllers
                 return View(model);
             }
 
+            if (returnUrl == null)
+            {
+                returnUrl = Url.Action("Index", "Home", new { });
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var user = UserManager.FindByEmail(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
 
             var result = SignInStatus.Failure;
 
             if (user != null)
             {
-                result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                if (await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Vui lòng xác nhận tài khoản");
+                    result = SignInStatus.RequiresVerification;
+                }
+
             }
-            
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -91,7 +105,7 @@ namespace SGURestaurant.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return View(model);
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Email hoặc mật khẩu không đúng.");
@@ -165,21 +179,29 @@ namespace SGURestaurant.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    string msg = "Bạn đã đăng ký tài khoản tại SGURestaurant<br/>Vui lòng hoàn tất việc đăng ký của bạn <a href=\"" + callbackUrl + "\">tại đây</a>";
+                    await UserManager.SendEmailAsync(user.Id, "SGURestaurant - Xác nhận đăng ký", msg);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Confirm", new { Email = user.Email });
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Confirm(string Email)
+        {
+            ViewBag.Email = Email;
+            return View();
         }
 
         //

@@ -21,8 +21,34 @@ namespace SGURestaurant
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            // Credentials:
+            var credentialUserName = "thlogn@gmail.com";
+            var sentFrom = "thlogn@gmail.com";
+            var pwd = "dvhmmbnspexgspsr";
+
+            // Configure the client:
+            System.Net.Mail.SmtpClient client =
+                new System.Net.Mail.SmtpClient("smtp.gmail.com");
+
+            client.Port = 587;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            // Create the credentials:
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(credentialUserName, pwd);
+
+            client.EnableSsl = true;
+            client.Credentials = credentials;
+
+            // Create the message:
+            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+            mail.IsBodyHtml = true;
+
+            // Send:
+            return client.SendMailAsync(mail);
         }
 
         internal bool Send(string smtpUserName, string smtpPassword, string smtpHost, int smtpPort, string emailTo, string subject, string body)

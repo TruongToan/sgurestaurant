@@ -74,13 +74,20 @@ namespace SGURestaurant.Areas.Admin.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var user = UserManager.FindByEmail(model.Email);
+            var user = await UserManager.FindAsync(model.Email, model.Password);
 
             var result = SignInStatus.Failure;
 
             if (user != null)
             {
-                result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                if (user.EmailConfirmed)
+                {
+                    result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Vui lòng xác nhận email.");
+                }
             }
             
             switch (result)
