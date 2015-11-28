@@ -58,11 +58,11 @@ namespace SGURestaurant
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "905171733103-u8od38bham3f3bnsns9r6btg6lkglako.apps.googleusercontent.com",
+                ClientSecret = "PpVvYKrT3_DYcjdUeSf1CcLt"
+            });
         }
     }
 }

@@ -7,6 +7,10 @@ namespace SGURestaurant.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        [Display(Name = "Tên tài khoản")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "{0} không hợp lệ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
