@@ -54,9 +54,9 @@ namespace SGURestaurant
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1635574340025937",
+               appSecret: "ad0dc27656850c1c02858a6bba992722");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
