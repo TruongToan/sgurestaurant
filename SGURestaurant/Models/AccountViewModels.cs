@@ -13,6 +13,12 @@ namespace SGURestaurant.Models
         [Required(ErrorMessage = "{0} không hợp lệ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "{0} là bắt buộc")]
+        [Display(Name = "Số ĐT")]
+        [StringLength(50, ErrorMessage = "{0} không được quá {1} ký tự")]
+        [Phone(ErrorMessage = "{0} không hợp lệ")]
+        public string PhoneNumber { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -89,6 +95,12 @@ namespace SGURestaurant.Models
         [Display(Name = "Họ tên")]
         [StringLength(50, ErrorMessage = "{0} không được quá {1} ký tự")]
         public string UserName { get; set; }
+
+        [Required(ErrorMessage = "{0} là bắt buộc")]
+        [Display(Name = "Số ĐT")]
+        [StringLength(50, ErrorMessage = "{0} không được quá {1} ký tự")]
+        [Phone(ErrorMessage = "{0} không hợp lệ")]
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -177,6 +177,7 @@ namespace SGURestaurant.Controllers
             {
                 var user = new ApplicationUser {
                     UserName = model.UserName,
+                    PhoneNumber = model.PhoneNumber,
                     Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
