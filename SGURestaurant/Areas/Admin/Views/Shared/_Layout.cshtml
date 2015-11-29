@@ -24,11 +24,11 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Tổng quan", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("Quản lý người dùng", "Index", "Users")</li>
                     }
                     else if (User.IsInRole("Manager"))
                     {
                         <li>@Html.ActionLink("Quản lý món ăn", "Index", "Meals")</li>
-                        <li>@Html.ActionLink("Quản lý người dùng", "Index", "Users")</li>
                         <li>@Html.ActionLink("Quản lý đặt món", "Index", "Bookings")</li>
                     }
                 </ul>

@@ -8,12 +8,17 @@ using System.Web.Mvc;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class AdminController : Controller
     {
+        SGURestaurant.Models.SGURestaurantContext db = new SGURestaurant.Models.SGURestaurantContext();
         // GET: Admin/Admin
         public ActionResult Index()
         {
+            ViewData["user-count"] = db.Users.Count();
+            ViewData["meal-count"] = db.Meals.Count();
+            ViewData["booking-count"] = db.Bookings.Count();
+            ViewData["income"] = 10000;
             return View();
         }
     }

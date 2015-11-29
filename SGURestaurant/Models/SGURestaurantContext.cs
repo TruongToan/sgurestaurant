@@ -36,11 +36,6 @@ namespace SGURestaurant.Models
             modelBuilder.Entity<Review>().HasKey(e => e.Id);
             modelBuilder.Entity<ApplicationRole>().HasKey(e => e.Id);
 
-            // IMPORTANT
-            modelBuilder.Entity<IdentityUserLogin>().HasKey(e => e.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey(e => e.Id);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
-
             modelBuilder.Entity<Booking>().HasMany(e => e.BookingDetails).WithRequired().HasForeignKey(e => e.BookingId);
             modelBuilder.Entity<Booking>().HasRequired(e => e.User).WithMany(e => e.Bookings).HasForeignKey(e => e.UserId);
             modelBuilder.Entity<Booking>().HasRequired(e => e.Table).WithMany().HasForeignKey(e => e.TableId);

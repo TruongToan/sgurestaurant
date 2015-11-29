@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SGURestaurant.Models;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SGURestaurant.Controllers
 {
@@ -179,6 +181,10 @@ namespace SGURestaurant.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(new SGURestaurantContext()));
+                    await userManager.AddToRoleAsync(user.Id, "Customer");
+
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
