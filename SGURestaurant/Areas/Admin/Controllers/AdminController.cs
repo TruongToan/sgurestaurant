@@ -18,7 +18,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
             ViewData["user-count"] = db.Users.Count();
             ViewData["meal-count"] = db.Meals.Count();
             ViewData["booking-count"] = db.Bookings.Count();
-            ViewData["income"] = 10000;
+            ViewData["income"] = db.BookingDetails.Sum(e => e.Meal.Price).ToString("0,000");
             return View();
         }
     }
