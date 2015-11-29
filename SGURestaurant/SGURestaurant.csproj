@@ -386,7 +386,6 @@
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\Delete.cshtml" />
     <Content Include="Views\Booking\Details.cshtml" />
-    <Content Include="Views\Booking\Edit.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Home\Sale.cshtml" />
     <Content Include="Views\SendMail\Contact.cshtml" />

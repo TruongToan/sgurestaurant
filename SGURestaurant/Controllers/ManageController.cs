@@ -55,12 +55,12 @@ namespace SGURestaurant.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? "Thay đổi mật khẩu thành công."
+                : message == ManageMessageId.SetPasswordSuccess ? "Mật khẩu của bạn đã được cài đặt."
+                : message == ManageMessageId.SetTwoFactorSuccess ? ""
+                : message == ManageMessageId.Error ? "Đã có lỗi xảy ra."
+                : message == ManageMessageId.AddPhoneSuccess ? "-"
+                : message == ManageMessageId.RemovePhoneSuccess ? "-"
                 : "";
 
             var userId = User.Identity.GetUserId();
