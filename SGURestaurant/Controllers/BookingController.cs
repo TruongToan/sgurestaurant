@@ -23,6 +23,14 @@ namespace SGURestaurant.Controllers
             return View(db.Bookings.Where(e => User.Identity.Name.Equals(e.User.UserName)).Include(b => b.Table).Include(b => b.User));
         }
 
+        [HttpPost]
+        public ActionResult GetBookedTables()
+        {
+            var date = DateTime.Parse(string.Format("{0:dd/mm/yyyy}", Request["date"]));
+            var bookedtables = db.Bookings.Where(e => e.Time == date).Select(e => new { id = e.Table.Id });
+            return Json(bookedtables);
+        }
+
         // GET: Booking/Details/5
         public ActionResult Details(int? id)
         {
@@ -51,6 +59,40 @@ namespace SGURestaurant.Controllers
                 bookingdetails.Add(newItem);
             }
             booking.BookingDetails = bookingdetails;
+            return View(booking);
+        }
+
+        [HttpPost]
+        public ActionResult Confirm([Bind(Include = "Time,TableId")] Booking booking)
+        {
+            var currentUser = db.Users.Where(e => e.UserName == User.Identity.Name).FirstOrDefault();
+            if (currentUser != null)
+            {
+                booking.UserId = currentUser.Id;
+                booking.Status = false;
+
+                var bookingdetails = new List<BookingDetail>();
+
+                foreach (var item in ShoppingCart.Instance.Items)
+                {
+                    BookingDetail newItem = new BookingDetail();
+                    newItem.Meal = db.Meals.First(e => e.Id == item.ItemId);
+                    newItem.Number = item.Quantity;
+                    bookingdetails.Add(newItem);
+                }
+                booking.BookingDetails = bookingdetails;
+
+                if (ModelState.IsValid)
+                {
+                    db.Bookings.Add(booking);
+                    db.SaveChanges();
+                    ShoppingCart.Instance.ClearCart();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
+            }
+            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "FullName", booking.UserId);
             return View(booking);
         }
 

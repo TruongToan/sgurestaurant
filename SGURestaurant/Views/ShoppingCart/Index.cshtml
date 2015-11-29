@@ -33,93 +33,96 @@
             Giỏ hàng
             <small>Các món ăn bạn đã chọn</small>
         </h1>
-        <ol class="breadcrumb">
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li class="active">Giỏ hàng</li>
-        </ol>
     </div>
 </div>
 <!-- /.row -->
 <!-- Intro Content -->
 
-<div class="row">
-    <div class="col-md-7">
-        <table class="table" id="my-shopping-cart">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Meal.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Meal.OriginPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>
-                    <span class="number-text">Thành tiền</span>
-                </th>
-                <th>
-                </th>
-            </tr>
+@if (Model.Count() > 0)
+{
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table" id="my-shopping-cart">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Meal.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Meal.OriginPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        <span class="number-text">Thành tiền</span>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
 
-            @{
-                var total = 0;
-            }
-            @foreach (var item in Model)
-            {
-                total += item.Quantity * item.Meal.Price;
-                
-                <tr data-id="@item.Meal.Id">
-                    <td>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-5">
-                                    <img src=" @item.Meal.ImageUrl " class="shopping-img-responsive" />
-                                </div>
-                                <div class="col-md-7">
-                                    @Html.DisplayFor(modelItem => item.Meal.Name)
+                @{
+                    var total = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    total += item.Quantity * item.Meal.Price;
+
+                    <tr data-id="@item.Meal.Id">
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-5">
+                                        <img src=" @item.Meal.ImageUrl " class="shopping-img-responsive" />
+                                    </div>
+                                    <div class="col-md-7">
+                                        @Html.DisplayFor(modelItem => item.Meal.Name)
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        @(item.Meal.Price.ToString("0,000"))
-                    </td>
-                    <td>
-                        @using (Html.BeginForm("UpdateCart/" + item.Meal.Id, "ShoppingCart", FormMethod.Post))
-                        {
-                            @Html.TextBoxFor(modelItem => item.Quantity, new { maxlength = 2, min = 1, max = 10, type = "number", @class = "shopping-input number-text", onchange = "submit()" })
-                        }
-                    </td>
-                    <td>
-                        <span class="number-text text-bold">@((item.Quantity * item.Meal.Price).ToString("0,000"))</span>
-                    </td>
-                    <td>
-                        @using (Html.BeginForm("RemoveFromCart/" + item.Meal.Id, "ShoppingCart", FormMethod.Post))
-                        {
-                            <button type="submit" class="btn-danger remove-from-cart" data-id="@item.Meal.Id"><span class="glyphicon glyphicon-remove"></span></button>
-                        }
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            @(item.Meal.Price.ToString("0,000"))
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("UpdateCart/" + item.Meal.Id, "ShoppingCart", FormMethod.Post))
+                            {
+                                @Html.TextBoxFor(modelItem => item.Quantity, new { maxlength = 2, min = 1, max = 10, type = "number", @class = "shopping-input number-text", onchange = "submit()" })
+                            }
+                        </td>
+                        <td>
+                            <span class="number-text text-bold">@((item.Quantity * item.Meal.Price).ToString("0,000"))</span>
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("RemoveFromCart/" + item.Meal.Id, "ShoppingCart", FormMethod.Post))
+                            {
+                                <button type="submit" class="btn-danger remove-from-cart" data-id="@item.Meal.Id"><span class="glyphicon glyphicon-remove"></span></button>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-md-5">
+            <h2>Tổng tiền: @(total.ToString("0,000")) đ</h2>
+            <p><i>(Chưa bao gồm VAT)</i></p>
+
+            @using (Html.BeginForm("Create", "Booking", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-primary">Đặt món ngay</button>
             }
 
-        </table>
+            <br />
+            @using (Html.BeginForm("ClearCart", "ShoppingCart", FormMethod.Post))
+            {
+                <button type="submit" class="btn btn-danger">Xóa giỏ hàng&nbsp;</button>
+            }
+        </div>
     </div>
-    <div class="col-md-5">
-        <h2>Tổng tiền: @(total.ToString("0,000")) đ</h2>
-        <p><i>(Chưa bao gồm VAT)</i></p>
-
-        @using (Html.BeginForm("Index", "Booking", FormMethod.Post))
-        {
-            <button type="submit" class="btn btn-primary">Đặt món ngay</button>
-        }
-
-        <br />
-        @using (Html.BeginForm("ClearCart", "ShoppingCart", FormMethod.Post))
-        {
-            <button type="submit" class="btn btn-danger">Xóa giỏ hàng&nbsp;</button>
-        }
-    </div>
-</div>
+}
+else
+{
+    <p>Bạn chưa có sản phẩm nào trong giỏ hàng</p>
+    <p>Vui lòng quay lại của hàng để tiếp tục đặt món!</p>
+    @Html.ActionLink("Quay lại trang chủ", "Index", "Home")
+}

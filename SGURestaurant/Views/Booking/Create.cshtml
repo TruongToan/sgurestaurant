@@ -18,174 +18,106 @@
     {
         <button type="submit" class="btn btn-danger">Hủy hóa đơn</button>
     }
-    <hr />
-    <ul class="nav nav-pills nav-justified">
-        <li class="active"><a data-toggle="tab" href="#home">Thông tin đặt món &gt;</a></li>
-        <li><a data-toggle="tab" href="#menu2">Thông tin khác &gt;</a></li>
-        <li><a data-toggle="tab" href="#menu3">Hoàn thành</a></li>
-    </ul>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <h4>Chi tiết đặt món</h4>
+                <table class="table table-bordered" id="my-shopping-cart">
+                    <tr>
+                        <th>
+                            Tên món
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                        <th>
+                            Đơn giá
+                        </th>
+                    </tr>
 
-    <hr />
-
-    <div class="tab-content">
-        <div id="home" class="tab-pane in active">
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Chi tiết đặt món</h4>
-                    <table class="table" id="my-shopping-cart">
-                        <tr>
-                            <th>
-                                Tên món
-                            </th>
-                            <th>
-                                Số lượng
-                            </th>
-                            <th>
-                                Đơn giá
-                            </th>
-                        </tr>
-
-                        @{
-                            var total = 0;
-                        }
-                        @foreach (var item in Model.BookingDetails)
-                        {
-                            total += item.Number * item.Meal.Price;
-
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Meal.Name)
-                                </td>
-                                <td>
-                                    @(item.Number)
-                                </td>
-                                <td>
-                                    @(item.Meal.Price.ToString("0,000"))
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-                </div>
-
-                <div class="col-md-6">
-                    <br />
-                    <br />
-                    <table>
-                        <tr>
-                            <th class="col-md-4">Tổng tiền món ăn</th>
-                            <td class="text-right col-md-2">@(total.ToString("0,000"))</td>
-                        </tr>
-                        <tr>
-                            <th class="col-md-4">Phí VAT (10%)</th>
-                            <td class="text-right col-md-2">@((total * 0.1f).ToString("0,000"))</td>
-                        </tr>
-                        <tr>
-                            <th class="col-md-4">Tổng cộng (đã làm tròn số)</th>
-                            <td class="text-right col-md-2">@(((int)(total * 1.1f / 1000) * 1000).ToString("0,000"))</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div id="menu2" class="tab-pane">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div id="show_inline">
-                        <input type="text" id="datetimepicker10" />
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <h4>Chọn bàn</h4>
-                    <table class="table">
-                        <tr>
-                            <td colspan="1" rowspan="1" data-id="2" class="table-empty">Bàn 2</td>
-                            <td colspan="1" rowspan="1" data-id="3" class="table-empty">Bàn 3</td>
-                            <td colspan="1" rowspan="1" data-id="4" class="table-empty">Bàn 4</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" rowspan="1" data-id="11" class="table-empty table-busy">Bàn 11</td>
-                            <td colspan="1" rowspan="2" data-id="1" class="table-empty">Bàn 1</td>
-                            <td colspan="1" rowspan="1" data-id="5" class="table-empty">Bàn 5</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" rowspan="1" data-id="10" class="table-empty">Bàn 10</td>
-                            <td colspan="1" rowspan="1" data-id="6" class="table-empty">Bàn 6</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" rowspan="1" data-id="9" class="table-empty">Bàn 9</td>
-                            <td colspan="1" rowspan="1" data-id="8" class="table-empty">Bàn 8</td>
-                            <td colspan="1" rowspan="1" data-id="7" class="table-empty">Bàn 7</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div id="menu3" class="tab-pane">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Chi tiết đặt món</h4>
-                    <table class="table" id="my-shopping-cart">
-                        <tr>
-                            <th>
-                                Tên món
-                            </th>
-                            <th>
-                                Số lượng
-                            </th>
-                            <th>
-                                Đơn giá
-                            </th>
-                        </tr>
-
-                        @foreach (var item in Model.BookingDetails)
-                        {
-                            total += item.Number * item.Meal.Price;
-
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Meal.Name)
-                                </td>
-                                <td>
-                                    @(item.Number)
-                                </td>
-                                <td>
-                                    @(item.Meal.Price.ToString("0,000"))
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
-                </div>
-
-
-                <div class="col-md-6">
-                    @using (Html.BeginForm("Create", "Booking", FormMethod.Post))
-                {
-                        @Html.TextBoxFor(e => e.TableId, new { type = "hidden", id = "book-table" });
-                        @Html.TextBoxFor(e => e.Time, new { type = "hidden", id = "book-time" });
-                        <button type="submit" class="btn btn-primary navbar-right">Xác nhận đặt món</button>
+                    @{
+                        var total = 0;
                     }
-                </div>
+                    @foreach (var item in Model.BookingDetails)
+                {
+                    total += item.Number * item.Meal.Price;
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Meal.Name)
+                            </td>
+                            <td>
+                                @(item.Number)
+                            </td>
+                            <td>
+                                @(item.Meal.Price.ToString("0,000"))
+                            </td>
+                        </tr>
+                    }
+
+                </table>
             </div>
 
+            <div class="col-md-4">
+                <h4>Chọn ngày</h4>
+                <div id="show_inline">
+                    <input type="text" id="datetimepicker10" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4>Chọn bàn</h4>
+                <table class="table">
+                    <tr>
+                        <td id="table-2" colspan="1" rowspan="1" data-id="2" class="table-empty">Bàn 2</td>
+                        <td id="table-3" colspan="1" rowspan="1" data-id="3" class="table-empty">Bàn 3</td>
+                        <td id="table-4" colspan="1" rowspan="1" data-id="4" class="table-empty">Bàn 4</td>
+                    </tr>
+                    <tr>
+                        <td id="table-11" colspan="1" rowspan="1" data-id="11" class="table-empty table-busy">Bàn 11</td>
+                        <td id="table-1" colspan="1" rowspan="2" data-id="1" class="table-empty">Bàn 1</td>
+                        <td id="table-5" colspan="1" rowspan="1" data-id="5" class="table-empty">Bàn 5</td>
+                    </tr>
+                    <tr>
+                        <td id="table-10" colspan="1" rowspan="1" data-id="10" class="table-empty">Bàn 10</td>
+                        <td id="table-6" colspan="1" rowspan="1" data-id="6" class="table-empty">Bàn 6</td>
+                    </tr>
+                    <tr>
+                        <td id="table-9" colspan="1" rowspan="1" data-id="9" class="table-empty">Bàn 9</td>
+                        <td id="table-8" colspan="1" rowspan="1" data-id="8" class="table-empty">Bàn 8</td>
+                        <td id="table-7" colspan="1" rowspan="1" data-id="7" class="table-empty">Bàn 7</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <h4 class="navbar-right">Tổng cộng: @Model.BookingDetails.Sum(e => e.Meal.Price * e.Number).ToString("0,000")</h4>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            @using (Html.BeginForm("Confirm", "Booking", FormMethod.Post))
+            {
+                @Html.TextBoxFor(e => e.TableId, new { type = "hidden", id = "book-table" });
+                @Html.TextBoxFor(e => e.Time, new { type = "hidden", id = "book-time" });
+                <button id="button-confirm" type="submit" disabled class="btn btn-primary navbar-right">Xác nhận đặt món</button>
+            }
         </div>
     </div>
 
-                            }
-                            else
-                            {
-                                <p>Bạn cần đăng nhập để đặt món!</p>
-                                @Html.ActionLink("Vui lòng đăng nhập để tiếp tục", "Login", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null);
-                            }
+    }
+else
+{
+    <p>Bạn cần đăng nhập để đặt món!</p>
+    @Html.ActionLink("Vui lòng đăng nhập để tiếp tục", "Login", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null);
+}
 
 <hr />
 
 @Html.ActionLink("Quay lại trang chủ", "Index", "Home")
 
 <script>
+    
     $('#datetimepicker10').datetimepicker({
         step: 5,
         inline: true,
@@ -195,11 +127,40 @@
 
     $(document).ready(function () {
         var d = new Date();
-        $("#book-time").val(d.getDate() + "/"+ (d.getMonth() + 1) + "/" + d.getFullYear());
+        $("#book-time").val(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
+        $.post("/Booking/GetBookedTables", { "date": d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() },
+        function (data) {
+            // Successful requests get here
+            // Update the page elements
+            $(".table-empty").removeClass("table-chosen");
+            $(".table-empty").removeClass("table-busy");
+            for (var k in data) {
+                $("#table-" + data[k].id).removeClass("table-busy");
+                $("#table-" + data[k].id).addClass("table-busy");
+            }
+
+        });
     });
 
     $('#datetimepicker10').on("change", function () {
         $("#book-time").val($(this).val());
+        var recordToDelete = $(this).val();
+        if (recordToDelete != '') {
+            // Perform the ajax post
+            $("#button-confirm").attr("disabled", true);
+            $.post("/Booking/GetBookedTables", { "date": recordToDelete },
+                function (data) {
+                    // Successful requests get here
+                    // Update the page elements
+                    $(".table-empty").removeClass("table-chosen");
+                    $(".table-empty").removeClass("table-busy");
+                    for (var k in data) {
+                        $("#table-" + data[k].id).removeClass("table-busy");
+                        $("#table-" + data[k].id).addClass("table-busy");
+                    }
+                    
+                });
+        }
     });
 
     $(".table-empty").click(function () {
@@ -207,5 +168,6 @@
         $(".table-empty").removeClass("table-chosen");
         $(this).addClass("table-chosen");
         $("#book-table").val($(this).attr("data-id"));
+        $("#button-confirm").removeAttr("disabled");
     });
 </script>

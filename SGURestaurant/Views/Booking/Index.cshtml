@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.Table.Id)
             </td>
             <td>
-                @(item.BookingDetails.Sum(e => e.Meal.Price).ToString("0,000"))
+                @(item.BookingDetails.Sum(e => e.Meal.Price * e.Number).ToString("0,000"))
             </td>
             <td>
                 @if (item.Status)

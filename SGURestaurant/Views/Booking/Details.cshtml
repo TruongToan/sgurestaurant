@@ -48,7 +48,7 @@
             </dt>
 
             <dd>
-                @(Model.BookingDetails.Sum(e => e.Meal.Price).ToString("0,000"))
+                @(Model.BookingDetails.Sum(e => e.Meal.Price * e.Number).ToString("0,000"))
             </dd>
 
         </dl>

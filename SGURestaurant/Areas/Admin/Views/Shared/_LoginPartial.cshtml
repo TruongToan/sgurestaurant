@@ -2,7 +2,7 @@
 @if (Request.IsAuthenticated)
 {
     <li>
-        @Html.ActionLink("Chào " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @Html.ActionLink("Chào " + User.Identity.Name + "!", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
     </li>
     using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "nav navbar-nav navbar-right" }))
     {
