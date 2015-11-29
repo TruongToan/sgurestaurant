@@ -20,17 +20,74 @@ namespace SGURestaurant.Controllers
 
         public ActionResult Index(string Id)
         {
+            var keyword = Request["keyword"];
+            var group = Request["group"];
+            var price1 = Request["price1"] == null ? 0 : int.Parse(Request["price1"]);
+            var price2 = Request["price2"] == null ? 1000 : int.Parse(Request["price2"]);
+
+            if (keyword == null) keyword = "";
+            if (group == null) group = "";
+
             List<MealType> types = db.Meals.Select(e => e.MealType).Distinct().ToList();
             ViewData["groups"] = types;
             if (Id == null || Id.Equals(""))
             {
                 ViewBag.Type = string.Empty;
-                return View(db.Meals.Where(e => e.Status).ToList());
+                if (group == "indredients")
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status 
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000 
+                        && e.Indredients.Contains(keyword)).ToList());
+                }
+                else if (group == "name")
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status 
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000 
+                        && e.Name.Contains(keyword)).ToList());
+                }
+                else
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status 
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000 
+                        && (e.Name.Contains(keyword) || e.Indredients.Contains(keyword))).ToList());
+                }
             }
             else
             {
                 ViewBag.Type = Id;
-                return View(db.Meals.Where(e => e.MealType.Name == Id && e.Status).ToList());
+                if (group == "indredients")
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000
+                        && e.MealType.Name == Id
+                        && e.Indredients.Contains(keyword)).ToList());
+                }
+                else if (group == "name")
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000
+                        && e.MealType.Name == Id 
+                        && e.Name.Contains(keyword)).ToList());
+                }
+                else
+                {
+                    return View(db.Meals.Where(
+                        e => e.Status 
+                        && e.Price <= price2 * 1000 
+                        && e.Price >= price1 * 1000
+                        && e.MealType.Name == Id 
+                        && (e.Name.Contains(keyword) || e.Indredients.Contains(keyword))).ToList());
+                }
             }
         }
 
