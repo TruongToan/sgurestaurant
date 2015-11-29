@@ -19,14 +19,16 @@ namespace SGURestaurant.Models
         [DisplayName("Giá gốc")]
         public virtual int OriginPrice { get; set; }
 
-        [DisplayName("Giá")]
+        [DisplayName("Giá hiện tại")]
         public virtual int Price { get; set; }
 
+        [DisplayName("Thứ tự món")]
         public virtual int MealTypeId { get; set; }
 
         [DisplayName("Thứ tự món")]
         public virtual MealType MealType { get; set; }
 
+        [DisplayName("Kiểu món")]
         public virtual int MealStyleId { get; set; }
 
         [DisplayName("Kiểu món")]

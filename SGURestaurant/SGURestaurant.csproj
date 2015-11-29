@@ -317,7 +317,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Admin\Views\Meals\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Meals\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Meals\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Meals\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Meals\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Bookings\Create.cshtml" />

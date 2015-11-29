@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SGURestaurant.Models.Meal>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý món ăn";
 }
 
-<h2>Index</h2>
+<h2>Danh sách các món ăn</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("+Thêm món ăn", "Create")
 </p>
 <table class="table">
     <tr>
@@ -65,9 +65,8 @@
             @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Sửa", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
