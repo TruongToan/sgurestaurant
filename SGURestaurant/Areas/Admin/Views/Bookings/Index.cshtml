@@ -1,14 +1,34 @@
 ﻿@model IEnumerable<SGURestaurant.Models.Booking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý đặt món";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Index", "Bookings", FormMethod.Get))
+{
+    <select name="view" class="dropdown btn-primary" onchange="submit()">
+        @if (Request["view"] == "approval")
+        {
+            <option value="all">Tất cả</option>
+            <option value="approval" selected>Đã xét duyệt</option>
+            <option value="new">Chưa xét duyệt</option>
+        }
+        else if (Request["view"] == "all")
+        {
+            <option value="all" selected>Tất cả</option>
+            <option value="approval">Đã xét duyệt</option>
+            <option value="new">Chưa xét duyệt</option>
+        }
+        else
+        {
+            <option value="all">Tất cả</option>
+            <option value="approval">Đã xét duyệt</option>
+            <option value="new" selected>Chưa xét duyệt</option>
+        }
+    </select>
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -32,7 +52,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Time)
+            @string.Format("{0:dd-M-yyyy}", DateTime.Parse(Html.DisplayFor(modelItem => item.Time).ToString()))
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.User.UserName)
@@ -41,15 +61,25 @@
             @Html.DisplayFor(modelItem => item.Table.Id)
         </td>
         <td>
-            @(10000.ToString("0,000")))
+            @(item.BookingDetails.Sum(e => e.Meal.Price).ToString("0,000"))
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
+            @if (item.Status)
+            {
+                <span class="text-success">Đã xét duyệt</span>
+            }
+            else
+            {
+                using (Html.BeginForm("Approval/" + item.Id, "Bookings", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-success">Đồng ý</button>
+                }
+            }
+            
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

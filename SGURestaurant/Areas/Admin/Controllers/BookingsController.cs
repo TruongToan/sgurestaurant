@@ -18,8 +18,30 @@ namespace SGURestaurant.Areas.Admin.Controllers
         // GET: Admin/Bookings
         public ActionResult Index()
         {
-            var bookings = db.Bookings.Include(b => b.Table).Include(b => b.User);
+            var view = Request["view"];
+            var bookings = db.Bookings.Where(e => !e.Status).Include(b => b.Table).Include(b => b.User);
+
+            if (Request["view"] == "approval")
+            {
+                bookings = db.Bookings.Where(e => e.Status).Include(b => b.Table).Include(b => b.User);
+            }
+            else if (Request["view"] == "all")
+            {
+                bookings = db.Bookings.Include(b => b.Table).Include(b => b.User);
+            }
+            
             return View(bookings.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult Approval(int? id)
+        {
+            if (id != null)
+            {
+                db.Bookings.SingleOrDefault(e => e.Id == id).Status = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Bookings/Details/5

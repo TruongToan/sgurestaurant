@@ -319,10 +319,8 @@
     <Content Include="Areas\Admin\Views\Meals\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Meals\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Meals\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Bookings\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Bookings\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Bookings\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Bookings\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Bookings\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />

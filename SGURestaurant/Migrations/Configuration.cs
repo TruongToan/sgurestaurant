@@ -61,6 +61,12 @@
             }
             Meals.ForEach(e => context.Meals.Add(e));
             context.SaveChanges();
+
+            var Tables = new List<Table>();
+            for (int i = 0; i < 11; i++)
+            {
+                Tables.Add(new Table() { Id = i + 1, ChairNumber = 10, Feature = "VIP" });
+            }
         }
     }
 }
