@@ -67,6 +67,8 @@
             {
                 Tables.Add(new Table() { Id = i + 1, ChairNumber = 10, Feature = "VIP" });
             }
+            Tables.ForEach(e => context.Tables.Add(e));
+            context.SaveChanges();
         }
     }
 }
