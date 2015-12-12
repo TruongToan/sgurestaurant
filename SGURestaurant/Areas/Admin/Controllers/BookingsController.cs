@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SGURestaurant.Models;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI;
 
 namespace SGURestaurant.Areas.Admin.Controllers
 {
@@ -154,6 +157,65 @@ namespace SGURestaurant.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void ExportToExcel()
+        {
+            try
+            {
+                //Excel.Application appli = new Excel.Application();
+                //Excel.Workbook workb = appli.Workbooks.Add(System.Reflection.Missing.Value);
+                //Excel.Worksheet works = workb.ActiveSheet;
+                //BookingModel bk = new BookingModel();
+                //works.Cells[1, 1] = "ID";
+                //works.Cells[1, 2] = "Time";
+                //works.Cells[1, 3] = "Status";
+                //works.Cells[1, 4] = "TableId";
+                //works.Cells[1, 5] = "UserId";
+                //works.Cells[1, 6] = "Table_ID";
+                //int row = 2;
+                //foreach(Booking p in bk.findAll())
+                //{
+                //    works.Cells[row, 1] = p.Id;
+                //    works.Cells[row, 2] = p.Time.ToString("dd/mm/yyyy");
+                //    works.Cells[row, 3] = p.Status;
+                //    works.Cells[row, 4] = p.TableId;
+                //    works.Cells[row, 5] = p.User;
+                //    works.Cells[row, 6] = p.Table;
+                //    row++;
+                //}
+
+                //workb.Close();
+                //Marshal.ReleaseComObject(workb);
+                //ViewBag.Result = "In thanh cong";
+                var grid = new GridView();
+                AccountViewModels bk = new AccountViewModels();
+                grid.DataSource = from p in bk.findAll()
+                                  select new
+                                  {
+                                      ID = p.Id,
+                                      Time = p.Time.ToString("dd/MM/yyyy"),
+                                      Status = p.Status.ToString(),
+                                      User = p.User.UserName,
+                                      Price = p.BookingDetails.Sum(e => e.Meal.Price * e.Number).ToString("0,000"),
+                                      Table = p.TableId
+                                  };
+                grid.DataBind();
+
+                Response.ClearContent();
+                Response.AddHeader("content-disposition" , "attachment;filename=ExportToExcel.xls");
+                Response.ContentType = "application/excel";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+                grid.RenderControl(htw);
+
+                Response.Write(sw.ToString());
+                Response.End();
+
+
+            }
+            catch (Exception ex) { ViewBag.Result = ex.Message; }
         }
     }
 }
