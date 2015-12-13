@@ -93,7 +93,7 @@ namespace SGURestaurant.Controllers
                 ViewBag.TableId = new SelectList(db.Tables, "Id", "Feature", booking.TableId);
             }
             //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "FullName", booking.UserId);
-            return View(booking);
+            return RedirectToAction("Index");
         }
 
         // GET: Booking/Edit/5

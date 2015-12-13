@@ -122,13 +122,13 @@ else
         step: 5,
         inline: true,
         timepicker: false,
-        format: 'd/m/Y'
+        format: 'm/d/Y'
     });
 
     $(document).ready(function () {
         var d = new Date();
-        $("#book-time").val(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear());
-        $.post("/Booking/GetBookedTables", { "date": d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() },
+        $("#book-time").val((d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear());
+        $.post("/Booking/GetBookedTables", { "date": (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() },
         function (data) {
             // Successful requests get here
             // Update the page elements
@@ -145,6 +145,13 @@ else
     $('#datetimepicker10').on("change", function () {
         $("#book-time").val($(this).val());
         var recordToDelete = $(this).val();
+        var d = new Date();
+        d.setDate(d.getDate() - 1);
+        var selectdate = new Date($(this).val());
+        if (selectdate.getTime() < d.getTime()) {
+            $(".table-empty").addClass("table-busy");
+            return;
+        }
         if (recordToDelete != '') {
             // Perform the ajax post
             $("#button-confirm").attr("disabled", true);

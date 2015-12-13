@@ -203,7 +203,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
                 grid.DataBind();
 
                 Response.ClearContent();
-                Response.AddHeader("content-disposition" , "attachment;filename=ExportToExcel.xls");
+                Response.AddHeader("content-disposition" , "attachment;filename=BookingList.xls");
                 Response.ContentType = "application/excel";
                 StringWriter sw = new StringWriter();
                 HtmlTextWriter htw = new HtmlTextWriter(sw);
