@@ -189,7 +189,7 @@ namespace SGURestaurant.Areas.Admin.Controllers
                 //Marshal.ReleaseComObject(workb);
                 //ViewBag.Result = "In thanh cong";
                 var grid = new GridView();
-                AccountViewModels bk = new AccountViewModels();
+                BookingModels bk = new BookingModels();
                 grid.DataSource = from p in bk.findAll()
                                   select new
                                   {
